@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/YourContract.sol": {
+      "content": "// SPDX-License-Identifier: UNLICENSED\npragma solidity ^0.8.9;\n\ncontract YourContract {\n\taddress public owner;\n\n\tstruct Item {\n\t\tuint256 id;\n\t\tstring name;\n\t\tstring category;\n\t\tstring image;\n\t\tuint256 cost;\n\t\tuint256 rating;\n\t\tstring description;\n\t}\n\n\tstruct Order {\n\t\tuint256 time;\n\t\tItem item;\n\t}\n\n\tmapping(uint256 => Item) public items;\n\tmapping(address => mapping(uint256 => Order)) public orders;\n\tmapping(address => uint256) public orderCount;\n\n\tevent Buy(address buyer, uint256 orderId, uint256 itemId);\n\tevent List(string name, uint256 cost);\n\n\tmodifier onlyOwner() {\n\t\trequire(msg.sender == owner);\n\t\t_;\n\t}\n\n\tconstructor() {\n\t\towner = msg.sender;\n\t}\n\n\tfunction list(\n\t\tuint256 _id,\n\t\tstring memory _name,\n\t\tstring memory _category,\n\t\tstring memory _image,\n\t\tuint256 _cost,\n\t\tuint256 _rating,\n\t\tstring memory _description\n\t) public onlyOwner {\n\t\t// Create Item\n\t\tItem memory item = Item(\n\t\t\t_id,\n\t\t\t_name,\n\t\t\t_category,\n\t\t\t_image,\n\t\t\t_cost,\n\t\t\t_rating,\n\t\t\t_description\n\t\t);\n\n\t\t// Add Item to mapping\n\t\titems[_id] = item;\n\n\t\t// Emit event\n\t\temit List(_name, _cost);\n\t}\n\n\tfunction buy(uint256 _id) public payable {\n\t\t// Fetch item\n\t\tItem memory item = items[_id];\n\n\t\t// Require enough ether to buy item\n\t\trequire(msg.value >= item.cost);\n\n\t\t// Create order\n\t\tOrder memory order = Order(block.timestamp, item);\n\n\t\t// Add order for user\n\t\torderCount[msg.sender]++; // <-- Order ID\n\t\torders[msg.sender][orderCount[msg.sender]] = order;\n\n\t\t// Emit event\n\t\temit Buy(msg.sender, orderCount[msg.sender], item.id);\n\t}\n\n\tfunction withdraw() public onlyOwner {\n\t\t(bool success, ) = owner.call{ value: address(this).balance }(\"\");\n\t\trequire(success);\n\t}\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
