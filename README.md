@@ -1,80 +1,95 @@
-# 🏗 Scaffold-ETH 2
+# :green_salad: Food Mart
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+Indulge in nutritious meals while effortlessly monitoring the calorie content per serving. Our system utilizes IPFS to store food images, which are seamlessly listed within the contract along with descriptive data for each item.
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+# :mag_right: Navigate through the frontend end
+* Connect your wallet on the top right.
+* Hover on the image of the meal you want to order to know the amount of calories per serving.
+* Navigate to the food category of your choice by clicking on your desired meal choice on the Nav bar.
 
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, Viem, and Typescript.
+# :bricks: Building 
+* ```yarn install``` to install locally.
+* In the same terminal, start your local network run ```yarn chain```.
+* Add you ```.env``` file to ``` packages/hardhat``` folder.
+* The default network is set to sepolia. To change this, go to the ```packages/hardhat/hardhat.config.js``` file. Then change the ```defaultnetwork```.
+* Specify the ```DEPLOYER_PRIVATE_KEY``` variable in the ```.env``` file and insert your wallet's private key.
+* Deploy your contract using ```yarn deploy```
+* To confirm the integrity of your contract, run  ```yarn verify```  or, if using a network other than sepolia without altering the default network, execute ```yarn verify --network your_network```.
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+## :compass: Locations
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/1171422a-0ce4-4203-bcd4-d2d1941d198b)
+- The smart contract is `YourContract.sol` in `packages/hardhat/contracts`
+- The frontend is in `packages/nextjs/pages`
+- The deployment scripts is in `packages/hardhat/deploy`
+- The smart contract data is in `packages/hardhat/data`
 
-## Requirements
 
-Before you begin, you need to install the following tools:
+## :page_with_curl: Smart Contract description
+  This Solidity smart contract, ```YourContract.sol```. The contract is geared towards listing items, facilitating user purchases, and enabling the owner to withdraw the accumulated funds.
 
-- [Node (>= v18.17)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
+### Key Components
+#### Structs
+1. Item: Represents an item for sale with attributes such as ID, name, category, image URL, cost, rating, and description.
+2. Order: Captures the details of a purchase order, including the timestamp of the transaction and the associated item.
 
-## Quickstart
 
-To get started with Scaffold-ETH 2, follow the steps below:
 
-1. Clone this repo & install dependencies
+   
+#### Functions:
+1. ```list()```: 
+* Description: Allows the contract owner to list new items.
+* Parameters:
+  
+    _id: Unique identifier for the item.
 
-```
-git clone https://github.com/scaffold-eth/scaffold-eth-2.git
-cd scaffold-eth-2
-yarn install
-```
+    _name: Name of the item.
 
-2. Run a local network in the first terminal:
+    _category: Category to which the item belongs.
 
-```
-yarn chain
-```
+    _image: URL pointing to the item's image.
 
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`.
+    _cost: Cost of the item.
+  
+    _rating: Rating assigned to the item.
+  
+    _description: Descriptive information about the item.
+  
+* Access Restriction: Only accessible by the contract owner (onlyOwner modifier).
+* Behavior:
+    - Creates a new Item struct with the provided details.
+    - Adds the item to the items mapping.
+    - Emits a List event with the item's name and cost.
 
-3. On a second terminal, deploy the test contract:
+  
+2. ```buy()```:
+* Description: Allows users to purchase items by providing the item's ID and sufficient Ether.
+* Parameters:
+    _id: ID of the item to be purchased.
+* Behavior:
+    - Fetches the details of the specified item.
+    - Requires the user to send enough Ether to cover the item's cost.
+    - Creates a new Order struct with the current timestamp and the purchased item.
+    - Records the order for the user in the orders mapping.
+    - Emits a Buy event with details about the buyer, order ID, and item ID.
 
-```
-yarn deploy
-```
+3. ```withdraw()```
+* Description: Permits the contract owner to withdraw the accumulated balance.
+* Access Restriction: Only accessible by the contract owner (onlyOwner modifier).
+* Behavior:
+    - Initiates a fund withdrawal to the owner's address using a low-level call operation.
+    - Ensures the withdrawal is successful.
+ 
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
+  
+#### Usage Highlights
+1. Listing Items:
+The owner lists items by calling the ```list()``` function, providing details such as name, category, cost, and more.
 
-4. On a third terminal, start your NextJS app:
+2. Making a Purchase:
+Users initiate a purchase by calling the ```buy()``` function with the ID of the desired item and sending sufficient Ether.
 
-```
-yarn start
-```
+4. Owner Withdrawal:
+The contract owner can withdraw the accumulated funds using the ```withdraw()``` function.
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
 
-Run smart contract test with `yarn hardhat:test`
-
-- Edit your smart contract `YourContract.sol` in `packages/hardhat/contracts`
-- Edit your frontend in `packages/nextjs/pages`
-- Edit your deployment scripts in `packages/hardhat/deploy`
-
-## Documentation
-
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
-
-To know more about its features, check out our [website](https://scaffoldeth.io).
-
-## Contributing to Scaffold-ETH 2
-
-We welcome contributions to Scaffold-ETH 2!
-
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+This food web app was built with [Scaffold-ETH 2](https://scaffoldeth.io).
