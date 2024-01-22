@@ -1,13 +1,13 @@
-# :green_salad: Food Mart
+# 🥗 Food Mart
 
 Indulge in nutritious meals while effortlessly monitoring the calorie content per serving. Our system utilizes IPFS to store food images, which are seamlessly listed within the contract along with descriptive data for each item.
 
-# :mag_right: Navigate through the frontend end
+# 🗺️ Navigate through the frontend end
 * Connect your wallet on the top right.
 * Hover on the image of the meal you want to order to know the amount of calories per serving.
 * Navigate to the food category of your choice by clicking on your desired meal choice on the Nav bar.
 
-# :bricks: Building 
+# 🧱 Building 
 * ```yarn install``` to install locally.
 * In the same terminal, start your local network run ```yarn chain```.
 * Add you ```.env``` file to ``` packages/hardhat``` folder.
@@ -16,7 +16,7 @@ Indulge in nutritious meals while effortlessly monitoring the calorie content pe
 * Deploy your contract using ```yarn deploy```
 * To confirm the integrity of your contract, run  ```yarn verify```  or, if using a network other than sepolia without altering the default network, execute ```yarn verify --network your_network```.
 
-## :compass: Locations
+## 🧭 Locations
 
 - The smart contract is `YourContract.sol` in `packages/hardhat/contracts`
 - The frontend is in `packages/nextjs/pages`
@@ -24,7 +24,7 @@ Indulge in nutritious meals while effortlessly monitoring the calorie content pe
 - The smart contract data is in `packages/hardhat/data`
 
 
-## :page_with_curl: Smart Contract description
+## 📃 Smart Contract description
   This Solidity smart contract, ```YourContract.sol```. The contract is geared towards listing items, facilitating user purchases, and enabling the owner to withdraw the accumulated funds.
 
 ### Key Components
