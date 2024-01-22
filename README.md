@@ -1,13 +1,13 @@
-# :green_salad: Food Mart
+# 🥗 Food Mart
 
 Indulge in nutritious meals while effortlessly monitoring the calorie content per serving. Our system utilizes IPFS to store food images, which are seamlessly listed within the contract along with descriptive data for each item.
 
-# :mag_right: Navigate through the frontend end
+# 🗺️ Navigate through the frontend end
 * Connect your wallet on the top right.
 * Hover on the image of the meal you want to order to know the amount of calories per serving.
 * Navigate to the food category of your choice by clicking on your desired meal choice on the Nav bar.
 
-# :bricks: Building 
+# 🧱 Building 
 * ```yarn install``` to install locally.
 * In the same terminal, start your local network run ```yarn chain```.
 * Add you ```.env``` file to ``` packages/hardhat``` folder.
@@ -16,7 +16,7 @@ Indulge in nutritious meals while effortlessly monitoring the calorie content pe
 * Deploy your contract using ```yarn deploy```
 * To confirm the integrity of your contract, run  ```yarn verify```  or, if using a network other than sepolia without altering the default network, execute ```yarn verify --network your_network```.
 
-## :compass: Locations
+## 🧭 Locations
 
 - The smart contract is `YourContract.sol` in `packages/hardhat/contracts`
 - The frontend is in `packages/nextjs/pages`
@@ -24,7 +24,7 @@ Indulge in nutritious meals while effortlessly monitoring the calorie content pe
 - The smart contract data is in `packages/hardhat/data`
 
 
-## :page_with_curl: Smart Contract description
+## 📃 Smart Contract description
   This Solidity smart contract, ```YourContract.sol```. The contract is geared towards listing items, facilitating user purchases, and enabling the owner to withdraw the accumulated funds.
 
 ### Key Components
@@ -36,7 +36,7 @@ Indulge in nutritious meals while effortlessly monitoring the calorie content pe
 
    
 #### Functions:
-1. ```list()```: 
+1. ```list()```:
 * Description: Allows the contract owner to list new items.
 * Parameters:
   
@@ -59,8 +59,6 @@ Indulge in nutritious meals while effortlessly monitoring the calorie content pe
     - Creates a new Item struct with the provided details.
     - Adds the item to the items mapping.
     - Emits a List event with the item's name and cost.
-
-  
 2. ```buy()```:
 * Description: Allows users to purchase items by providing the item's ID and sufficient Ether.
 * Parameters:
@@ -71,7 +69,6 @@ Indulge in nutritious meals while effortlessly monitoring the calorie content pe
     - Creates a new Order struct with the current timestamp and the purchased item.
     - Records the order for the user in the orders mapping.
     - Emits a Buy event with details about the buyer, order ID, and item ID.
-
 3. ```withdraw()```
 * Description: Permits the contract owner to withdraw the accumulated balance.
 * Access Restriction: Only accessible by the contract owner (onlyOwner modifier).
@@ -79,7 +76,6 @@ Indulge in nutritious meals while effortlessly monitoring the calorie content pe
     - Initiates a fund withdrawal to the owner's address using a low-level call operation.
     - Ensures the withdrawal is successful.
  
-
   
 #### Usage Highlights
 1. Listing Items:
