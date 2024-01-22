@@ -36,7 +36,7 @@ Indulge in nutritious meals while effortlessly monitoring the calorie content pe
 
    
 #### Functions:
-1. ```list()```: 
+1. ```list()```:
 * Description: Allows the contract owner to list new items.
 * Parameters:
   
@@ -59,8 +59,6 @@ Indulge in nutritious meals while effortlessly monitoring the calorie content pe
     - Creates a new Item struct with the provided details.
     - Adds the item to the items mapping.
     - Emits a List event with the item's name and cost.
-
-  
 2. ```buy()```:
 * Description: Allows users to purchase items by providing the item's ID and sufficient Ether.
 * Parameters:
@@ -71,7 +69,6 @@ Indulge in nutritious meals while effortlessly monitoring the calorie content pe
     - Creates a new Order struct with the current timestamp and the purchased item.
     - Records the order for the user in the orders mapping.
     - Emits a Buy event with details about the buyer, order ID, and item ID.
-
 3. ```withdraw()```
 * Description: Permits the contract owner to withdraw the accumulated balance.
 * Access Restriction: Only accessible by the contract owner (onlyOwner modifier).
@@ -79,7 +76,6 @@ Indulge in nutritious meals while effortlessly monitoring the calorie content pe
     - Initiates a fund withdrawal to the owner's address using a low-level call operation.
     - Ensures the withdrawal is successful.
  
-
   
 #### Usage Highlights
 1. Listing Items:
